@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+tr:nth-child(even) {background-color: grey}
+
+table {
+  /*border: 1px solid black;*/
+  margin: auto;
+  overflow: auto;
+}
+
+th {
+  border: 3px solid black;
+  font-size: 20px;
+}
+
+td {
+  border: 3px solid black;
+  font-size: 20px;
+}
+
+.rc-table-row {
+  font-size: 30px;
+  border: 1px solid black;
+  color: @text-color;
+  transition: opacity 0.3s ease;
+  line-height: @line-height;
+  overflow: hidden;
+
+  .@rc-table-scroll {
+    overflow: auto;
+  }
+
+  .@rc-table-header {
+    overflow: hidden;
+    background: @table-head-background-color;
+  }
+}
