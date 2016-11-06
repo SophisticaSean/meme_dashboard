@@ -9,7 +9,8 @@ tr:nth-child(even) {background-color: grey}
 table {
   /*border: 1px solid black;*/
   margin: auto;
-  overflow: auto;
+  overflow:  auto;
+  display: block;
 }
 
 th {
