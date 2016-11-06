@@ -30,30 +30,6 @@ function sortByName(a,b) {
   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 }
 
-const columns = [{
-  title: 'Discord ID', dataIndex: 'DID', key: 'DID', width: 100
-  },{
-  title: 'Username', dataIndex: 'Username', key: 'Username', width: 100
-  },{
-  title: 'CurrentMemes', dataIndex: 'CurMoney', key: 'CurMoney', width: 100
-  },{
-  title: 'Net Gambling Balance', dataIndex: 'NetGamble', key: 'NetGamble', width: 100
-  },{
-  title: 'TippedMemeGain', dataIndex: 'RecMoney', key: 'RecMoney', width: 100
-  },{
-  title: 'TippedMemeLoss', dataIndex: 'GiveMoney', key: 'GiveMoney', width: 100
-  },{
-  title: 'Mined Memes', dataIndex: 'EarMoney', key: 'EarMoney', width: 100
-  },{
-  title: 'Collected Memes', dataIndex: 'CollectedMoney', key: 'CollectedMoney', width: 100
-  },{
-  title: 'Memes Spent on Units', dataIndex: 'SpentMoney', key: 'SpentMoney', width: 100
-  },{
-  title: 'HackingMemeGain', dataIndex: 'HackedMoney', key: 'HackedMoney', width: 100
-  },{
-  title: 'HackingMemeLoss', dataIndex: 'StolenFromMoney', key: 'StolenFromMoney', width: 100
-}]
-
 class Users extends Component {
   constructor(props) {
     super(props);
@@ -100,12 +76,36 @@ class Users extends Component {
     } else {
       data = this.state.data
     }
-    data.unshift({
-      NetGamble: <GambleSortButton onClick={this.handleGambleSort} />,
-      CurMoney: <CurrentSortButton onClick={this.handleCurrentSort} />,
-      Username: <NameSortButton onClick={this.handleNameSort} />,
-    })
+    //data.unshift({
+      //NetGamble: <GambleSortButton onClick={this.handleGambleSort} />,
+      //CurMoney: <CurrentSortButton onClick={this.handleCurrentSort} />,
+      //Username: <NameSortButton onClick={this.handleNameSort} />,
 
+   //})
+
+     var columns = [{
+      title: 'Discord ID', dataIndex: 'DID', key: 'DID', width: 100
+      },{
+      title: <NameSortButton onClick={this.handleNameSort} />, dataIndex: 'Username', key: 'Username', width: 100
+      },{
+      title: <CurrentSortButton onClick={this.handleCurrentSort} />, dataIndex: 'CurMoney', key: 'CurMoney', width: 100
+      },{
+      title: <GambleSortButton onClick={this.handleGambleSort} />, dataIndex: 'NetGamble', key: 'NetGamble', width: 100
+      },{
+      title: 'TippedMemeGain', dataIndex: 'RecMoney', key: 'RecMoney', width: 100
+      },{
+      title: 'TippedMemeLoss', dataIndex: 'GiveMoney', key: 'GiveMoney', width: 100
+      },{
+      title: 'Mined Memes', dataIndex: 'EarMoney', key: 'EarMoney', width: 100
+      //},{
+      //title: 'Collected Memes', dataIndex: 'CollectedMoney', key: 'CollectedMoney', width: 100
+      },{
+      title: 'Memes Spent on Units', dataIndex: 'SpentMoney', key: 'SpentMoney', width: 100
+      },{
+      title: 'HackingMemeGain', dataIndex: 'HackedMoney', key: 'HackedMoney', width: 100
+      },{
+      title: 'HackingMemeLoss', dataIndex: 'StolenFromMoney', key: 'StolenFromMoney', width: 100
+    }]
     return (<div>
       <Table columns={columns} data={data} />
     </div>
@@ -116,21 +116,21 @@ class Users extends Component {
 function GambleSortButton(props) {
   return (
     <button onClick={props.onClick}>
-      Sort By NetGamble
+      Net Gambling Balance
     </button>
   );
 }
 function CurrentSortButton(props) {
   return (
     <button onClick={props.onClick}>
-      Sort By CurrentMoney
+      Current Memes
     </button>
   );
 }
 function NameSortButton(props) {
   return (
     <button onClick={props.onClick}>
-      Sort By Username
+      Username
     </button>
   );
 }
