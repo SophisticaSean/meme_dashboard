@@ -24,6 +24,14 @@ function sortByCurrent(a,b) {
   return 0;
 }
 
+function sortByProduction(a,b) {
+  if (a.Production < b.Production)
+    return 1;
+  if (a.Production > b.Production)
+    return -1;
+  return 0;
+}
+
 function sortByName(a,b) {
   var textA = a.Username.toUpperCase();
   var textB = b.Username.toUpperCase();
@@ -37,6 +45,7 @@ class Users extends Component {
     this.handleGambleSort = this.handleGambleSort.bind(this);
     this.handleCurrentSort = this.handleCurrentSort.bind(this);
     this.handleNameSort = this.handleNameSort.bind(this);
+    this.handleProductionSort = this.handleProductionSort.bind(this);
 
     this.state = {data: [{Username: "hello"}], sortState: 'Current'}
     axios.get('http://memeapi.sophisticasean.com:8080/users')
@@ -44,6 +53,7 @@ class Users extends Component {
          var newData = result.data
          newData.forEach(function(user) {
             user.NetGamble = (user.WonMoney - user.LostMoney)
+            user.Production = ((user.Miner)+(user.Robot*60)+(user.Swarm*3600)+(user.Fracker*216000))
           })
          this.setState({data: newData})
       }
@@ -62,6 +72,10 @@ class Users extends Component {
     this.setState({sortState: 'Name'});
   }
 
+  handleProductionSort() {
+    this.setState({sortState: 'Production'});
+  }
+
   render() {
     const sortState = this.state.sortState;
     var oldData = this.state.data.slice();
@@ -73,6 +87,8 @@ class Users extends Component {
       data = oldData.sort(sortByGamble)
     } else if (sortState === 'Name') {
       data = oldData.sort(sortByName)
+    } else if (sortState === 'Production') {
+      data = oldData.sort(sortByProduction)
     } else {
       data = this.state.data
     }
@@ -92,19 +108,21 @@ class Users extends Component {
       },{
       title: <GambleSortButton onClick={this.handleGambleSort} />, dataIndex: 'NetGamble', key: 'NetGamble', width: 100
       },{
+      title: <ProductionSortButton onClick={this.handleProductionSort} />, dataIndex: 'Production', key: 'Production', width: 100
+      },{
       title: 'TippedMemeGain', dataIndex: 'RecMoney', key: 'RecMoney', width: 100
       },{
       title: 'TippedMemeLoss', dataIndex: 'GiveMoney', key: 'GiveMoney', width: 100
       },{
       title: 'Mined Memes', dataIndex: 'EarMoney', key: 'EarMoney', width: 100
-      //},{
-      //title: 'Collected Memes', dataIndex: 'CollectedMoney', key: 'CollectedMoney', width: 100
+      },{
+      title: 'Collected Memes', dataIndex: 'CollectedMoney', key: 'CollectedMoney', width: 100
       },{
       title: 'Memes Spent on Units', dataIndex: 'SpentMoney', key: 'SpentMoney', width: 100
       },{
       title: 'HackingMemeGain', dataIndex: 'HackedMoney', key: 'HackedMoney', width: 100
       },{
-      title: 'HackingMemeLoss', dataIndex: 'StolenFromMoney', key: 'StolenFromMoney', width: 100
+      title: 'HackingMemeLoss', dataIndex: 'StolenFromMoney', key: 'StolenFromMoney', width: 101
     }]
     return (<div>
       <Table columns={columns} data={data} />
@@ -131,6 +149,13 @@ function NameSortButton(props) {
   return (
     <button onClick={props.onClick}>
       Username
+    </button>
+  );
+}
+function ProductionSortButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Production
     </button>
   );
 }
