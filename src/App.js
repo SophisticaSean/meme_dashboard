@@ -57,7 +57,7 @@ class Users extends Component {
             if (user.Username.indexOf("Trump") !== -1) {
               user.Username = "Str8 Memer"
             }
-            if (user.Username.indexOf("Rick") !== -1) {
+            if (user.Username.indexOf("rick") !== -1) {
               user.Username = "Big Rick"
             }
             if (user.Username.indexOf("Bong") !== -1) {
