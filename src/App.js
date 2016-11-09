@@ -53,7 +53,19 @@ class Users extends Component {
          var newData = result.data
          newData.forEach(function(user) {
             user.NetGamble = (user.WonMoney - user.LostMoney)
-            user.Production = ((user.Miner)+(user.Robot*60)+(user.Swarm*3600)+(user.Fracker*216000))
+            user.Production = ((user.Miner)+(user.Robot*60)+(user.Swarm*3600)+(user.Fracker*216000)/10)
+            if (user.Username.indexOf("Trump") !== -1) {
+              user.Username = "Str8 Memer"
+            }
+            if (user.Username.indexOf("dick") !== -1) {
+              user.Username = "Big Rick"
+            }
+            if (user.Username.indexOf("Bong") !== -1) {
+              user.Username = "Darth Bane"
+            }
+            if (user.Username.indexOf("Pipe") !== -1) {
+              user.Username = "Darth Plagus"
+            }
           })
          this.setState({data: newData})
       }

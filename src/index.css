@@ -4,7 +4,17 @@ body {
   font-family: sans-serif;
 }
 
-tr:nth-child(even) {background-color: grey}
+tr:nth-child(even) {background-color: lightgrey}
+tr:nth-child(1) {background-color: red}
+tr:nth-child(2) {background-color: orange}
+tr:nth-child(3) {background-color: yellow}
+tr:nth-child(4) {background-color: lime}
+tr:nth-child(5) {background-color: green; color: white;}
+tr:nth-child(6) {background-color: cyan}
+tr:nth-child(7) {background-color: blue; color: white;}
+tr:nth-child(8) {background-color: purple; color: white;}
+tr:nth-child(9) {background-color: violet}
+tr:nth-child(10) {background-color: pink}
 
 table {
   /*border: 1px solid black;*/
@@ -15,6 +25,7 @@ table {
 
 th {
   border: 3px solid black;
+  background-color: white;
   font-size: 20px;
 }
 
