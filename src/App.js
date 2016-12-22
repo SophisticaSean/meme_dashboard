@@ -32,6 +32,14 @@ function sortByProduction(a,b) {
   return 0;
 }
 
+function sortByRank(a,b) {
+  if (a.PrestigeLevel < b.PrestigeLevel)
+    return 1;
+  if (a.PrestigeLevel> b.PrestigeLevel)
+    return -1;
+  return 0;
+}
+
 function sortByName(a,b) {
   var textA = a.Username.toUpperCase();
   var textB = b.Username.toUpperCase();
@@ -46,6 +54,7 @@ class Users extends Component {
     this.handleCurrentSort = this.handleCurrentSort.bind(this);
     this.handleNameSort = this.handleNameSort.bind(this);
     this.handleProductionSort = this.handleProductionSort.bind(this);
+    this.handleRankSort = this.handleRankSort.bind(this);
 
     this.state = {data: [{Username: "hello"}], sortState: 'Current'}
     axios.get('http://memeapi.sophisticasean.com:8080/users')
@@ -67,6 +76,7 @@ class Users extends Component {
       currentActive: '',
       nameActive: '',
       productionActive: '',
+      rankActive: '',
     });
   }
 
@@ -77,6 +87,7 @@ class Users extends Component {
       currentActive: 'active',
       nameActive: '',
       productionActive: '',
+      rankActive: '',
     });
   }
 
@@ -87,6 +98,7 @@ class Users extends Component {
       currentActive: '',
       nameActive: 'active',
       productionActive: '',
+      rankActive: '',
     });
   }
 
@@ -97,6 +109,18 @@ class Users extends Component {
       currentActive: '',
       nameActive: '',
       productionActive: 'active',
+      rankActive: '',
+    });
+  }
+
+  handleRankSort() {
+    this.setState({
+      sortState: 'Rank',
+      gambleActive: '',
+      currentActive: '',
+      nameActive: '',
+      productionActive: '',
+      rankActive: 'active',
     });
   }
 
@@ -113,6 +137,8 @@ class Users extends Component {
       data = oldData.sort(sortByName)
     } else if (sortState === 'Production') {
       data = oldData.sort(sortByProduction)
+    } else if (sortState === 'Rank') {
+      data = oldData.sort(sortByRank)
     } else {
       data = this.state.data
     }
@@ -122,11 +148,13 @@ class Users extends Component {
       },{
       title: <NameSortButton className={this.state.nameActive} onClick={this.handleNameSort} />, dataIndex: 'Username', key: 'Username', width: 100
       },{
+      title: <RankSortButton className={this.state.rankActive} onClick={this.handleRankSort} />, dataIndex: 'PrestigeLevel', key: 'PrestigeLevel', width: 50
+      },{
+      title: <ProductionSortButton className={this.state.productionActive} onClick={this.handleProductionSort} />, dataIndex: 'Production', key: 'Production', width: 100
+      },{
       title: <CurrentSortButton className={this.state.currentActive} onClick={this.handleCurrentSort} />, dataIndex: 'CurMoney', key: 'CurMoney', width: 100
       },{
       title: <GambleSortButton className={this.state.gambleActive} onClick={this.handleGambleSort} />, dataIndex: 'NetGamble', key: 'NetGamble', width: 100
-      },{
-      title: <ProductionSortButton className={this.state.productionActive} onClick={this.handleProductionSort} />, dataIndex: 'Production', key: 'Production', width: 100
       },{
       title: 'TippedMemeGain', dataIndex: 'RecMoney', key: 'RecMoney', width: 100
       },{
@@ -186,6 +214,16 @@ function ProductionSortButton(props) {
       onClick={props.onClick}
     >
       Production
+    </button>
+  );
+}
+function RankSortButton(props) {
+  return (
+    <button
+      className={props.className}
+      onClick={props.onClick}
+    >
+      PrestigeRank
     </button>
   );
 }
