@@ -39,7 +39,7 @@ function sortByRank(a,b) {
     return -1;
   if (a.Production < b.Production)
     return 1;
-  if (a.Production < b.Production)
+  if (a.Production > b.Production)
     return -1;
   return 0;
 }
@@ -67,8 +67,8 @@ class Users extends Component {
          newData.forEach(function(user) {
             user.NetGamble = (user.WonMoney - user.LostMoney)
             user.Production = (((user.Miner*1)+(user.Robot*60)+(user.Swarm*3600)+(user.Fracker*216000))/10)
-            if (user.DID == "150882846318395392")
-              user.PrestigeLevel = "99999999999999 lvl MEME DADDY"
+            //if (user.DID == "150882846318395392")
+              //user.PrestigeLevel = "99999999999999 lvl MEME DADDY"
           })
          this.setState({data: newData})
       }
