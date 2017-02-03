@@ -35,7 +35,11 @@ function sortByProduction(a,b) {
 function sortByRank(a,b) {
   if (a.PrestigeLevel < b.PrestigeLevel)
     return 1;
-  if (a.PrestigeLevel> b.PrestigeLevel)
+  if (a.PrestigeLevel > b.PrestigeLevel)
+    return -1;
+  if (a.Production < b.Production)
+    return 1;
+  if (a.Production < b.Production)
     return -1;
   return 0;
 }
