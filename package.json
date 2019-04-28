@@ -2,7 +2,9 @@
   "name": "hello-world",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sophisticasean.github.io/meme_dashboard",
   "devDependencies": {
+    "gh-pages": "^2.0.1",
     "react-scripts": "0.7.0"
   },
   "dependencies": {
@@ -13,8 +15,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && pushstate-server build 80",
+    "build": "react-scripts build",
+    "run": "pushstate-server build 80",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   }
 }

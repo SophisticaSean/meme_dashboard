@@ -9,37 +9,47 @@ function formatName() {
 }
 
 function sortByGamble(a,b) {
-  if (a.NetGamble < b.NetGamble)
+  var ang = parseFloat(a.NetGamble.replace(/,/g,''));
+  var bng = parseFloat(b.NetGamble.replace(/,/g,''));
+  if (ang < bng)
     return 1;
-  if (a.NetGamble > b.NetGamble)
+  if (ang > bng)
     return -1;
   return 0;
 }
 
 function sortByCurrent(a,b) {
-  if (a.CurMoney < b.CurMoney)
+  var acr = parseFloat(a.CurMoney.replace(/,/g,''));
+  var bcr = parseFloat(b.CurMoney.replace(/,/g,''));
+  if (acr < bcr)
     return 1;
-  if (a.CurMoney > b.CurMoney)
+  if (acr > bcr)
     return -1;
   return 0;
 }
 
 function sortByProduction(a,b) {
-  if (a.Production < b.Production)
+  var ap = parseFloat(a.Production.replace(/,/g,''));
+  var bp = parseFloat(b.Production.replace(/,/g,''));
+  if (ap < bp)
     return 1;
-  if (a.Production > b.Production)
+  if (ap > bp)
     return -1;
   return 0;
 }
 
 function sortByRank(a,b) {
-  if (a.PrestigeLevel < b.PrestigeLevel)
+  var apl = parseFloat(a.PrestigeLevel.replace(/,/g,''));
+  var bpl = parseFloat(b.PrestigeLevel.replace(/,/g,''));
+  var ap = parseFloat(a.Production.replace(/,/g,''));
+  var bp = parseFloat(b.Production.replace(/,/g,''));
+  if (apl < bpl)
     return 1;
-  if (a.PrestigeLevel > b.PrestigeLevel)
+  if (apl > bpl)
     return -1;
-  if (a.Production < b.Production)
+  if (ap < bp)
     return 1;
-  if (a.Production > b.Production)
+  if (ap > bp)
     return -1;
   return 0;
 }
@@ -55,7 +65,7 @@ class Stats extends Component {
     super(props);
 
     this.state = {data: [{TotalUsers: "0"}]};
-    axios.get('http://sophisticasean.com:8080/stats')
+    axios.get('https://sophisticasean.com/meme_coin/stats')
       .then((result) => {
          var newData = result.data
          newData.forEach(function(stat) {
@@ -99,7 +109,7 @@ class Users extends Component {
     this.handleRankSort = this.handleRankSort.bind(this);
 
     this.state = {data: [{Username: "hello"}], sortState: 'Current'}
-    axios.get('http://sophisticasean.com:8080/users')
+    axios.get('https://sophisticasean.com/meme_coin/users')
       .then((result) => {
          var newData = result.data
          newData.forEach(function(user) {
