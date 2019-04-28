@@ -50,6 +50,44 @@ function sortByName(a,b) {
   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 }
 
+class Stats extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {data: [{TotalUsers: "0"}]};
+    axios.get('http://sophisticasean.com:8080/stats')
+      .then((result) => {
+         var newData = result.data
+         newData.forEach(function(stat) {
+            stat.TotalUsers = stat.TotalUsers.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            stat.TotalUsers90 = stat.TotalUsers90.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            stat.TotalTransactions = stat.TotalTransactions.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            stat.TotalTransactions90 = stat.TotalTransactions90.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+          })
+         this.setState({data: newData});
+      }
+    )
+  }
+
+  render() {
+    var data = this.state.data;
+
+     var columns = [{
+      title: 'Total Users', dataIndex: 'TotalUsers', key: 'TotalUsers', width: 100
+      },{
+      title: 'Total Users (last 90 days)', dataIndex: 'TotalUsers90', key: 'TotalUsers90', width: 100
+      },{
+      title: 'Total Transactions', dataIndex: 'TotalTransactions', key: 'TotalTransactions', width: 101
+      },{
+      title: 'Total Transactions (last 90 days)', dataIndex: 'TotalTransactions90', key: 'TotalTransactions90', width: 101
+    }]
+    return (<div>
+      <Table columns={columns} data={data} />
+    </div>
+    );
+  }
+}
+
 class Users extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +99,7 @@ class Users extends Component {
     this.handleRankSort = this.handleRankSort.bind(this);
 
     this.state = {data: [{Username: "hello"}], sortState: 'Current'}
-    axios.get('http://memeapi.sophisticasean.com:8080/users')
+    axios.get('http://sophisticasean.com:8080/users')
       .then((result) => {
          var newData = result.data
          newData.forEach(function(user) {
@@ -69,6 +107,25 @@ class Users extends Component {
             user.Production = (((user.Miner*1)+(user.Robot*60)+(user.Swarm*3600)+(user.Fracker*216000))/10)
             //if (user.DID == "150882846318395392")
               //user.PrestigeLevel = "99999999999999 lvl MEME DADDY"
+            if (user.Username.length > 15) {
+              user.Username = user.Username.substring(0,15);
+            };
+            if (user.DID == "185709415545044992") {
+              user.Username = "rekt"
+            };
+            // format the numbers with commas
+            user.Username = user.Username.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.PrestigeLevel = user.PrestigeLevel.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.Production = user.Production.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.CurMoney = user.CurMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.NetGamble = user.NetGamble.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.RecMoney = user.RecMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.GiveMoney = user.GiveMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.EarMoney = user.EarMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.CollectedMoney = user.CollectedMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.SpentMoney = user.SpentMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.HackedMoney = user.HackedMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+            user.StolenFromMoney = user.StolenFromMoney.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
           })
          this.setState({data: newData})
       }
@@ -241,6 +298,9 @@ class App extends Component {
         <div className="App-header">
           <img src="https://media2.giphy.com/media/l41lQukP8YbqrJfgs/200_s.gif" className="App-logo" alt="logo" />
           <h1>{formatName()}</h1>
+        </div>
+        <div className="BotStats-Header">
+          <Stats />
         </div>
         <div className="Some-data">
           <Users />
